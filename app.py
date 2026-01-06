@@ -19,7 +19,7 @@ MODEL_FILES = [
 def download_models():
     for file in MODEL_FILES:
         if not os.path.exists(file):
-            with st.spinner(f'Downloading {file} from Hugging Face...'):
+            with st.spinner(f'Fetching {file} ...'):
                 urllib.request.urlretrieve(REPO_URL + file, file)
 
 # --- 3. PREMIUM UI CSS ---
@@ -47,7 +47,7 @@ logo_path = "logo.png"
 if os.path.exists(logo_path):
     st.sidebar.image(logo_path, width=80)
 
-st.sidebar.header("📍 Trip Planning")
+st.sidebar.header("📍 Destination ")
 target_dist = st.sidebar.number_input("Target Distance (km)", min_value=1, max_value=500, value=100)
 
 st.sidebar.header("🔋 Battery Sensors")
@@ -104,14 +104,14 @@ if st.button("🚀 EXECUTE FULL SYSTEM ANALYSIS"):
         gc.collect() # Force clear memory
 
         # --- 6. RESTORED DISPLAY RESULTS ---
-        st.header("Step 1: Vehicle Telemetry")
+        st.header("🎛️ Vehicle Telemetry : ")
         r1_col1, r1_col2, r1_col3 = st.columns(3)
         r1_col1.metric("Current SoC (Charge)", f"{soc_p*100:.1f} %")
         r1_col2.metric("Available Range", f"{int(range_p)} km")
         r1_col3.metric("State of Health (SoH)", f"{health_p*100:.1f} %")
 
         st.divider()
-        st.header("Step 2: AI Advisory Reports")
+        st.header("🤖 AI Advisory Reports - 📈")
 
         st.subheader("🏁 Trip & Mission Advisory")
         if target_dist > range_p:
@@ -121,7 +121,7 @@ if st.button("🚀 EXECUTE FULL SYSTEM ANALYSIS"):
             rec_v = 80 if safety_buffer > 1.5 else 60 if safety_buffer > 1.1 else 40
             st.success(f"✅ **Mission Possible:** Maintain a speed of **{rec_v} km/h**.")
 
-        st.subheader("📡 Energy Discharge Analysis")
+        st.subheader("📉 Energy Discharge Analysis ")
         if fault_p == 1:
             st.warning("🚨 **ABNORMAL DISCHARGE:** Excessive energy drain detected!")
         else:
