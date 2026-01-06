@@ -10,27 +10,27 @@ st.set_page_config(page_title="EV AI Smart Monitor", layout="wide", initial_side
 
 # --- 2. AUTOMATIC MODEL DOWNLOADER ---
 REPO_URL = "https://huggingface.co/mahez/EV-Predictive-Maintenance-AI/resolve/main/"
+
 MODEL_FILES = [
-    "soc_model.pkl", 
-    "health_model.pkl", 
-    "range_model.pkl", 
-    "abnormal_discharge_model.pkl", 
-    "speed_recommendation_model.pkl", 
+    "soc_model.pkl",
+    "health_model.pkl",
+    "range_model.pkl",
+    "abnormal_discharge_model.pkl",
+    "speed_recommendation_model.pkl",
     "low_battery_model.pkl"
 ]
+if not os.path.exists(file):
+    st.error(f"❌ Model missing: {file}")
+    st.stop()
 
-@st.cache_resource
+@st.cache_resource(show_spinner=False)
 def load_all_models():
-    st.write("STEP 1: Starting model loader")
-
-    models = {}
+    loaded_models = {}
     for file in MODEL_FILES:
-        st.write(f"Loading {file} ...")
-        models[file] = joblib.load(os.path.join("models", file))
-        st.write(f"{file} loaded")
-
-    return models
-
+        if not os.path.exists(file):
+            urllib.request.urlretrieve(REPO_URL + file, file)
+        loaded_models[file] = joblib.load(file)
+    return loaded_models
 
 
 # --- 3. CUSTOM CSS ---
