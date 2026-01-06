@@ -21,19 +21,16 @@ MODEL_FILES = [
 
 @st.cache_resource
 def load_all_models():
-    os.makedirs("models", exist_ok=True)
-    loaded_models = {}
+    st.write("STEP 1: Starting model loader")
 
+    models = {}
     for file in MODEL_FILES:
-        local_path = os.path.join("models", file)
+        st.write(f"Loading {file} ...")
+        models[file] = joblib.load(os.path.join("models", file))
+        st.write(f"{file} loaded")
 
-        if not os.path.exists(local_path):
-            with st.spinner(f"Downloading {file}..."):
-                urllib.request.urlretrieve(REPO_URL + file, local_path)
+    return models
 
-        loaded_models[file] = joblib.load(local_path)
-
-    return loaded_models
 
 
 # --- 3. CUSTOM CSS ---
