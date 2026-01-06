@@ -19,15 +19,20 @@ MODEL_FILES = [
     "speed_recommendation_model.pkl",
     "low_battery_model.pkl"
 ]
+@st.cache_resource
+def load_model(name):
+    if not os.path.exists(name):
+        urllib.request.urlretrieve(REPO_URL + name, name)
+    return joblib.load(name)
 
-@st.cache_resource(show_spinner=False)
+'''@st.cache_resource(show_spinner=False)
 def load_all_models():
     loaded_models = {}
     for file in MODEL_FILES:
         if not os.path.exists(file):
             urllib.request.urlretrieve(REPO_URL + file, file)
         loaded_models[file] = joblib.load(file)
-    return loaded_models
+    return loaded_models'''
 
 
 # --- 3. CUSTOM CSS ---
