@@ -19,9 +19,6 @@ MODEL_FILES = [
     "speed_recommendation_model.pkl",
     "low_battery_model.pkl"
 ]
-if not os.path.exists(file):
-    st.error(f"❌ Model missing: {file}")
-    st.stop()
 
 @st.cache_resource(show_spinner=False)
 def load_all_models():
