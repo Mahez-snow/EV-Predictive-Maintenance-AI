@@ -19,14 +19,22 @@ MODEL_FILES = [
     "low_battery_model.pkl"
 ]
 
-@st.cache_resource(show_spinner=False)
+@st.cache_resource
 def load_all_models():
+    os.makedirs("models", exist_ok=True)
     loaded_models = {}
+
     for file in MODEL_FILES:
-        if not os.path.exists(file):
-            urllib.request.urlretrieve(REPO_URL + file, file)
-        loaded_models[file] = joblib.load(file)
+        local_path = os.path.join("models", file)
+
+        if not os.path.exists(local_path):
+            with st.spinner(f"Downloading {file}..."):
+                urllib.request.urlretrieve(REPO_URL + file, local_path)
+
+        loaded_models[file] = joblib.load(local_path)
+
     return loaded_models
+
 
 # --- 3. CUSTOM CSS ---
 st.markdown("""
@@ -53,11 +61,13 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 st.title("🚗 EV AI Smart Mission & Health Dashboard")
+st.info("✅ App loaded. Click the button to start analysis.")
 st.write("Real-time Predictive Analytics for Electric Vehicle Performance and Maintenance.")
 
 # --- 4. SIDEBAR: TRIP & SENSOR INPUTS ---
-st.sidebar.image("logo.png", width=80)
-
+logo_path = "logo.png"
+if os.path.exists(logo_path):
+    st.sidebar.image(logo_path, width=80)
 st.sidebar.header("📍 Trip Planning")
 target_dist = st.sidebar.number_input("Target Distance (km)", min_value=1, max_value=500, value=100)
 
