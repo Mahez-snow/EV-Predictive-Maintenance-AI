@@ -86,7 +86,7 @@ st.divider()
 if st.button("🚀 EXECUTE FULL SYSTEM ANALYSIS"):
     try:
         # ✅ ONLY CHANGE: loading from Hugging Face instead of local
-        models = load_all_models()
+        models = load_model()
         
         m_soc = models['soc_model.pkl']
         m_low = models['low_battery_model.pkl']
