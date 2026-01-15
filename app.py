@@ -76,6 +76,9 @@ st.write("Real-time Predictive Analytics for Electric Vehicle Performance and Ma
 # -----------------------------
 # SIDEBAR MODE SELECTOR
 # -----------------------------
+logo_path = "logo.png"
+if os.path.exists(logo_path):
+    st.sidebar.image(logo_path, width=80)
 st.sidebar.header("🔌 Input Mode")
 input_mode = st.sidebar.radio(
     "Select Data Source",
