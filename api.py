@@ -32,7 +32,7 @@ def upload_data():
     latest_data["target_distance"] = data.get("target_distance")
     latest_data["charge_cycles"] = data.get("charge_cycles")
     latest_data["load_cycles"] = data.get("load_cycles")
-
+    weight = data.get("load_cycles")  # hardware sends weight as load_cycles
     # Fixed battery temperature for stability
     latest_data["battery_temp"] = 35
 
