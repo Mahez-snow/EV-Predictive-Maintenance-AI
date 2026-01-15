@@ -43,20 +43,29 @@ def download_models():
 # PREMIUM UI CSS (UNCHANGED)
 # -----------------------------
 st.markdown("""
-    <style>
-    .stButton>button {
-        background-color: #007bff; color: white; border-radius: 10px;
-        font-weight: bold; width: 100%; height: 3em;
-    }
-    [data-testid="stSidebar"] [data-testid="stImage"] img {
-        width: 150px !important; height: 150px !important;
-        border-radius: 50% !important; background-color: transparent;
-        padding: 10px; object-fit: contain !important;
-        display: block; margin-left: auto; margin-right: auto;
-        border: 2px solid #e2e8f0;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+<style>
+.stButton>button {
+    background-color: #007bff;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    width: 100%;
+    height: 3em;
+}
+[data-testid="stSidebar"] [data-testid="stImage"] img {
+    width: 150px !important;
+    height: 150px !important;
+    border-radius: 50% !important;
+    background-color: transparent;
+    padding: 10px;
+    object-fit: contain !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #e2e8f0;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # -----------------------------
 # TITLE
