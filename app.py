@@ -73,11 +73,7 @@ st.sidebar.header("📲 Input Mode")
 
 input_mode = st.sidebar.radio(" ",["Software(Simulation)","Hardware (Live)"])
 
-# SIDEBAR: TRIP INFO
-st.sidebar.header("📍 Destination")
-target_dist = st.sidebar.number_input(
-    "Target Distance (km)", min_value=1, max_value=500, value=100
-)
+
 
 # ================= INPUT HANDLING =================
 if input_mode == "Hardware (Live)":
@@ -91,7 +87,7 @@ if input_mode == "Hardware (Live)":
             v_in = hw["voltage"]
             c_in = hw["current"]
 
-            # Battery temperature not sent by hardware → fixed for demo
+            # Battery temperature not sent by hardware 
             t_in = 35
 
             # ----- Vehicle Dynamics -----
@@ -123,6 +119,11 @@ if input_mode == "Hardware (Live)":
         st.stop()
 
 else:
+    # SIDEBAR: TRIP INFO
+    st.sidebar.header("📍 Destination")
+    target_dist = st.sidebar.number_input(
+          "Target Distance (km)", min_value=1, max_value=500, value=100
+                   )
     st.sidebar.header("🔋 Battery Sensors")
     v_in = st.sidebar.slider("Voltage (V)", 200, 400, 350)
     c_in = st.sidebar.slider("Current (A)", -200, 200, 20)
