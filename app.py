@@ -7,18 +7,15 @@ import os
 import gc
 import requests
 
-# -----------------------------
 # PAGE CONFIGURATION
-# -----------------------------
+
 st.set_page_config(
     page_title="EV AI Smart Monitor",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# -----------------------------
 # CONSTANTS
-# -----------------------------
 API_URL = "https://ev-predictive-maintenance-ai.onrender.com/latest"
 REPO_URL = "https://huggingface.co/mahez/EV-Predictive-Maintenance-AI/resolve/main/"
 MODEL_FILES = [
@@ -30,18 +27,14 @@ MODEL_FILES = [
     "speed_recommendation_model.pkl"
 ]
 
-# -----------------------------
 # MODEL DOWNLOADER
-# -----------------------------
 def download_models():
     for file in MODEL_FILES:
         if not os.path.exists(file):
             with st.spinner(f"Fetching {file} ..."):
                 urllib.request.urlretrieve(REPO_URL + file, file)
 
-# -----------------------------
 # PREMIUM UI CSS (UNCHANGED)
-# -----------------------------
 st.markdown("""
 <style>
 .stButton>button {
@@ -67,15 +60,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------
 # TITLE
-# -----------------------------
 st.title("🚗 EV AI Smart Mission & Health Dashboard")
 st.write("Real-time Predictive Analytics for Electric Vehicle Performance and Maintenance.")
 
-# -----------------------------
 # SIDEBAR MODE SELECTOR
-# -----------------------------
 logo_path = "logo.png"
 if os.path.exists(logo_path):
     st.sidebar.image(logo_path, width=80)
@@ -84,17 +73,13 @@ st.sidebar.header("📲 Input Mode")
 
 input_mode = st.sidebar.radio(" ",["Software(Simulation)","Hardware (Live)"])
 
-# -----------------------------
 # SIDEBAR: TRIP INFO
-# -----------------------------
 st.sidebar.header("📍 Destination")
 target_dist = st.sidebar.number_input(
     "Target Distance (km)", min_value=1, max_value=500, value=100
 )
 
-# -----------------------------
 # INPUT HANDLING
-# -----------------------------
 if input_mode == "Hardware (Live)":
     try:
         r = requests.get(API_URL, timeout=3)
@@ -128,15 +113,13 @@ else:
         value=0.1
     )
 
-# -----------------------------
 # EXECUTE ANALYSIS
-# -----------------------------
 st.divider()
 if st.button("🚀 EXECUTE FULL SYSTEM ANALYSIS"):
     try:
         download_models()
 
-        # --- Step A: SoC & Low Battery ---
+        # Step A: SoC & Low Battery
         with st.status("Analyzing Electrical Patterns...") as s:
             m = joblib.load("soc_model.pkl")
             df_elec = pd.DataFrame(
@@ -151,7 +134,7 @@ if st.button("🚀 EXECUTE FULL SYSTEM ANALYSIS"):
             del m
             s.update(label="Electrical Analysis Complete", state="complete")
 
-        # --- Step B: Range & Discharge ---
+        # Step B: Range & Discharge
         with st.status("Predicting Range & Discharge...") as s:
             m = joblib.load("range_model.pkl")
             df_trip = pd.DataFrame(
@@ -170,7 +153,7 @@ if st.button("🚀 EXECUTE FULL SYSTEM ANALYSIS"):
             del m
             s.update(label="Trip Dynamics Calculated", state="complete")
 
-        # --- Step C: Health ---
+        # Step C: Health 
         with st.status("Diagnostics...") as s:
             m = joblib.load("health_model.pkl")
             df_health = pd.DataFrame(
@@ -183,9 +166,7 @@ if st.button("🚀 EXECUTE FULL SYSTEM ANALYSIS"):
 
         gc.collect()
 
-        # -----------------------------
         # RESULTS (UNCHANGED LOOK)
-        # -----------------------------
         st.header("🎛️ Vehicle Telemetry :")
         r1_col1, r1_col2, r1_col3 = st.columns(3)
         r1_col1.metric("Current SoC (Charge)", f"{soc_p*100:.1f} %")
@@ -227,9 +208,7 @@ if st.button("🚀 EXECUTE FULL SYSTEM ANALYSIS"):
     except Exception as e:
         st.error(f"⚠️ System Error: {e}")
 
-# -----------------------------
 # FOOTER (UNCHANGED)
-# -----------------------------
 st.divider()
 with st.expander("📝 How to interpret the dashboard?"):
     st.write(
