@@ -79,10 +79,13 @@ st.write("Real-time Predictive Analytics for Electric Vehicle Performance and Ma
 logo_path = "logo.png"
 if os.path.exists(logo_path):
     st.sidebar.image(logo_path, width=80)
-st.sidebar.header("🔌 Input Mode")
+    
+st.sidebar.header("📲 Input Mode")
+
 input_mode = st.sidebar.radio(
-    "Select Data Source",
-    ["Simulation", "Hardware (Live)"]
+    " Select Data Source ",
+
+    ["Software(Simulation)", "Hardware (Live)"]
 )
 
 # -----------------------------
@@ -118,20 +121,16 @@ else:
     v_in = st.sidebar.slider("Voltage (V)", 200, 400, 350)
     c_in = st.sidebar.slider("Current (A)", -200, 200, 20)
     t_in = st.sidebar.slider("Battery Temp (°C)", 10, 75, 35)
+    cycles = st.sidebar.number_input("Charge Cycles", 0, 2000, 100)
 
     st.sidebar.header("⚙️ Vehicle Dynamics")
+    weight = st.sidebar.number_input("Load Weight (kg)", 0, 1000, 500)
     speed = st.sidebar.slider("Current Speed (km/h)", 0, 120, 60)
     roughness = st.sidebar.select_slider(
         "Road Condition (Roughness)",
         options=[0.1, 0.5, 1.0],
         value=0.1
     )
-
-# -----------------------------
-# COMMON INPUTS (UNCHANGED)
-# -----------------------------
-cycles = st.sidebar.number_input("Charge Cycles", 0, 2000, 100)
-weight = st.sidebar.number_input("Load Weight (kg)", 0, 1000, 500)
 
 # -----------------------------
 # EXECUTE ANALYSIS
