@@ -79,7 +79,7 @@ target_dist = st.sidebar.number_input(
     "Target Distance (km)", min_value=1, max_value=500, value=100
 )
 
-# INPUT HANDLING
+# ================= INPUT HANDLING =================
 if input_mode == "Hardware (Live)":
     try:
         r = requests.get(API_URL, timeout=3)
@@ -87,22 +87,29 @@ if input_mode == "Hardware (Live)":
         if r.status_code == 200:
             hw = r.json()
 
-            #  Electrical Inputs 
+            # ----- Electrical Inputs -----
             v_in = hw["voltage"]
             c_in = hw["current"]
 
-            # Fixed temperature for demo stability
-            t_in = hw.get("battery_temp", 35)
+            # Battery temperature not sent by hardware → fixed for demo
+            t_in = 35
 
-            #  Vehicle Dynamics 
+            # ----- Vehicle Dynamics -----
             speed = hw["speed"]
-            roughness = 0.1  # CAN roughness not yet modeled
 
-            # 🔑 VERY IMPORTANT FIXES
+            # Raspberry sends road condition → map to roughness
+            road_map = {
+                "normal": 0.1,
+                "medium": 0.5,
+                "high": 1.0
+            }
+            roughness = road_map.get(hw["road"], 0.1)
+
+            # ----- Mission Inputs -----
             target_dist = hw["target_distance"]
             cycles = hw["charge_cycles"]
 
-            # Hardware sends weight as load_cycles
+            # Raspberry sends vehicle load as load_cycles
             weight = hw["load_cycles"]
 
             st.sidebar.success("🟢 Live hardware connected")
@@ -111,7 +118,7 @@ if input_mode == "Hardware (Live)":
             st.sidebar.warning("Waiting for hardware data...")
             st.stop()
 
-    except Exception as e:
+    except Exception:
         st.sidebar.error("Hardware API unreachable")
         st.stop()
 
