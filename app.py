@@ -83,10 +83,8 @@ if os.path.exists(logo_path):
 st.sidebar.header("📲 Input Mode")
 
 input_mode = st.sidebar.radio(
-    
-    ["Software(Simulation)",
-     
-      "Hardware (Live)"]
+
+    ["Software(Simulation)" , "Hardware (Live)"]
 )
 
 # -----------------------------
