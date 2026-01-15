@@ -83,20 +83,38 @@ target_dist = st.sidebar.number_input(
 if input_mode == "Hardware (Live)":
     try:
         r = requests.get(API_URL, timeout=3)
+
         if r.status_code == 200:
             hw = r.json()
+
+            #  Electrical Inputs 
             v_in = hw["voltage"]
             c_in = hw["current"]
-            t_in = hw["battery_temp"]
+
+            # Fixed temperature for demo stability
+            t_in = hw.get("battery_temp", 35)
+
+            #  Vehicle Dynamics 
             speed = hw["speed"]
-            roughness = 0.1
+            roughness = 0.1  # CAN roughness not yet modeled
+
+            # 🔑 VERY IMPORTANT FIXES
+            target_dist = hw["target_distance"]
+            cycles = hw["charge_cycles"]
+
+            # Hardware sends weight as load_cycles
+            weight = hw["load_cycles"]
+
             st.sidebar.success("🟢 Live hardware connected")
+
         else:
             st.sidebar.warning("Waiting for hardware data...")
             st.stop()
-    except Exception:
+
+    except Exception as e:
         st.sidebar.error("Hardware API unreachable")
         st.stop()
+
 else:
     st.sidebar.header("🔋 Battery Sensors")
     v_in = st.sidebar.slider("Voltage (V)", 200, 400, 350)
