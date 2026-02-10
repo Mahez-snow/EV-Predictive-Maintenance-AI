@@ -1,42 +1,127 @@
-EV AI Smart Mission & Health Dashboard
-An integrated Predictive Maintenance and Mission Control system for Electric Vehicles (EVs). This project leverages Machine Learning to transform raw IoT sensor data into actionable insights, helping drivers mitigate "Range Anxiety" and manage battery longevity.
+# ⚡ EV Predictive Maintenance & Battery Intelligence System 🚗🔋
 
-📌 Project Overview
-This project addresses the critical need for intelligence in the EV industry by analyzing high-frequency sensor data to predict vehicle performance and maintenance requirements.
+An AI-powered predictive maintenance and battery monitoring system for **Electric Vehicles (EVs)** that analyzes battery behavior, predicts remaining driving range, detects abnormalities, and provides AI-based advisory insights.
 
-🛠️ Key Technical Features
-Precision Battery Analytics (SoC & SoH): Utilizes regression models to monitor the State of Charge (current energy) and State of Health (long-term degradation) by analyzing voltage, cycles, and thermal stress.
+---
 
-Proactive Fault Detection: A classification system that identifies Abnormal Discharge patterns—detecting energy leaks or thermal anomalies where current draw is disproportionate to vehicle speed.
+## 📌 Project Overview
 
-Dynamic Mission Controller: An AI "co-pilot" that estimates Remaining Range based on vehicle load and road conditions, providing an Optimal Speed Recommendation to ensure the destination is reached safely.
+Electric Vehicles rely heavily on battery health and efficient energy usage.  
+This project aims to provide an **intelligent monitoring and predictive system** that helps:
 
-💻 Tech Stack
-Language: Python
+- 🔍 Detect abnormal battery discharge patterns  
+- 📉 Monitor battery State of Charge (SOC)  
+- 📏 Predict remaining driving range  
+- 🧠 Provide AI advisory insights for maintenance  
+- 📊 Display model accuracy and prediction confidence  
 
-Machine Learning: Scikit-Learn (Random Forest Regressor & Classifier)
+The system combines **Machine Learning**, **Data Analysis**, and **AI advisory logic** to support smarter EV battery management.
 
-Web Framework: Streamlit (Custom CSS Dashboard)
+---
 
-Data Handling: Pandas, Numpy
+## ✨ Key Features
 
-Model Serialization: Joblib
+✅ **Battery Health Monitoring**  
+Tracks battery-related parameters and detects unusual discharge behavior.
 
-📁 Repository Structure
-├── app.py                     # Main Streamlit application
-├── EV_Project.ipynb           # Training notebook with deep data analysis
-├── requirements.txt           # List of necessary Python libraries
-├── soc_model.pkl              # Pre-trained SoC Model
-├── health_model.pkl           # Pre-trained SoH Model
-├── range_model.pkl            # Pre-trained Range Model
-├── abnormal_discharge_model.pkl # Pre-trained Fault Detector
-├── speed_recommendation_model.pkl # Pre-trained Efficiency Model
-├── low_battery_model.pkl      # Pre-trained Alert Model
-└── logo.png                   # Dashboard UI assets
+✅ **SOC Prediction**  
+Uses trained ML models to estimate the State of Charge accurately.
 
-🧪 Methodology & Logic
+✅ **Driving Range Prediction**  
+Predicts how many kilometers can be traveled with the current battery condition.
 
-The system was trained on a comprehensive IoT-based EV Dataset.
-      Absolute Current Logic: The AI monitors Current_Mag (magnitude) to handle both charging and discharging states (positive/negative current) accurately.
-      Threshold-Based Faults: Abnormal Discharge is triggered when high current magnitudes (>120A) occur at relatively low speeds (<45km/h) or if internal temperatures exceed 60°C.
-      Mission Physics: Range is dynamically calculated using the formula:  Range = (SoC \times 400) - (Weight \times 0.04) - (Roughness \times 20)
+✅ **Predictive Maintenance Alerts**  
+Identifies potential battery degradation or service requirements early.
+
+✅ **AI Advisory Report**  
+Provides explainable AI-based suggestions after analysis.
+
+✅ **Model Accuracy Display**  
+Shows validated model performance metrics (e.g., ≈90% accuracy).
+
+✅ **Prediction Confidence Indicator**  
+Displays confidence score **after analysis** (NIL before prediction).
+
+---
+
+## 🧠 Machine Learning Details
+
+- **Problem Type:** Regression  
+- **Models Used:**  
+  - SOC Prediction Model  
+  - Range Prediction Model  
+- **Evaluation Metrics:**  
+  - R² Score  
+  - Mean Absolute Error (MAE)  
+
+> ⚠️ Since this is a regression-based system, prediction probabilities are not directly available.  
+> The displayed accuracy represents **offline validation performance**, not per-sample probability.
+
+---
+
+## 📊 Accuracy & Confidence Explanation
+
+| Metric | Description |
+|------|------------|
+Model Accuracy | Fixed value derived from offline validation (≈90%) |
+Prediction Confidence | Calculated only after prediction |
+Initial State | Displays **NIL** until analysis is performed |
+
+---
+
+## 🏗️ System Architecture
+
+1. **Input Parameters**  
+   - Battery SOC  
+   - Voltage / Current (derived)  
+   - Distance requirement  
+
+2. **ML Model Inference**  
+   - SOC estimation  
+   - Range prediction  
+
+3. **AI Advisory Engine**  
+   - Maintenance suggestion  
+   - Risk indicators  
+
+4. **UI Dashboard Output**  
+   - Predictions  
+   - Accuracy  
+   - Confidence score  
+
+---
+
+EV-Predictive-Maintenance-AI/
+│
+├── models/
+│ ├── soc_model.pkl
+│ ├── range_model.pkl
+│
+├── app.py
+├── requirements.txt
+├── README.md
+└── assets/
+
+
+---
+
+## 🔗 Pretrained Models (Hosted on Hugging Face)
+
+- SOC Model  
+  👉 https://huggingface.co/mahez/EV-Predictive-Maintenance-AI/resolve/main/soc_model.pkl
+
+- Range Prediction Model  
+  👉 https://huggingface.co/mahez/EV-Predictive-Maintenance-AI
+
+---
+
+## 🚀 How to Run Locally
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/Mahez-snow/EV-Predictive-Maintenance-AI.git
+cd EV-Predictive-Maintenance-AI
+
+
+## 📁 Project Structure
+
